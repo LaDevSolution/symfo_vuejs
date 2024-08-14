@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\AvisDepot;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<AvisDepot>
@@ -16,6 +16,7 @@ class AvisDepotRepository extends ServiceEntityRepository
         parent::__construct($registry, AvisDepot::class);
     }
 
+    //TODO delete examples
     //    /**
     //     * @return AvisDepot[] Returns an array of AvisDepot objects
     //     */
@@ -40,4 +41,18 @@ class AvisDepotRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    /**
+     * Retrieve the list of urban planning authorization requests
+     *
+     * @return array
+     */
+    public function getAuthorizationRequests(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->select(['a.reference', 'a.dateDepot', 'a.dosDnmT', 'a.surfCc', 'a.nature', 'a.bieAdresse', 'a.bieCadT'])
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

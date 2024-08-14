@@ -17,7 +17,7 @@ class AvisDepot
     #[ORM\Column]
     private ?int $srt = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, name: 'dateenclair')]
     private ?string $dateEnClair = null;
 
     #[ORM\Column(length: 255)]
@@ -104,10 +104,10 @@ class AvisDepot
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $decision = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(nullable: true, name:'srt_2')]
     private ?int $srt2 = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true, name:'srt_3')]
     private ?string $srt3 = null;
 
     #[ORM\Column(length: 10, nullable: true)]
