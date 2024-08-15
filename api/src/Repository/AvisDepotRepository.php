@@ -50,7 +50,8 @@ class AvisDepotRepository extends ServiceEntityRepository
     public function getAuthorizationRequests(): array
     {
         return $this->createQueryBuilder('a')
-            ->select(['a.reference', 'a.dateDepot', 'a.dosDnmT', 'a.surfCc', 'a.nature', 'a.bieAdresse', 'a.bieCadT'])
+            ->select(['a.id', 'a.reference', 'a.dateDepot', 'a.dosDnmT', 'a.surfCc', 'a.nature', 'a.bieAdresse', 'a.bieCadT'])
+            ->orderBy('a.dateDepot', 'DESC')
             ->getQuery()
             ->getResult()
         ;
