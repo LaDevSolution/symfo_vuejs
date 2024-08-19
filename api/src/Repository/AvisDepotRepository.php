@@ -16,32 +16,6 @@ class AvisDepotRepository extends ServiceEntityRepository
         parent::__construct($registry, AvisDepot::class);
     }
 
-    //TODO delete examples
-    //    /**
-    //     * @return AvisDepot[] Returns an array of AvisDepot objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('a.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?AvisDepot
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
-
     /**
      * Retrieve the list of urban planning authorization requests
      *
@@ -56,4 +30,33 @@ class AvisDepotRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * Retrieve the list of urban planning authorization requests depends based on filters
+     *
+     * @param [type] $filters
+     * @return array
+     */
+    public function getAuthorizationRequestsFilters($filter): array
+    {
+        $filters = json_decode($filter, true);
+        $text = !empty($filters['text']) ? $filters['text'] : null;
+        $date = !empty($filters['date']) ? $filters['date'] : null;
+
+        $qb = $this->createQueryBuilder('a')
+            ->select(['a.id', 'a.reference', 'a.dateDepot', 'a.dosDnmT', 'a.surfCc', 'a.nature', 'a.bieAdresse', 'a.bieCadT'])
+            ->orderBy('a.dateDepot', 'DESC');
+
+        if($text != NULL){
+            $qb->andWhere('LOWER(a.reference) LIKE :text OR LOWER(a.dosDnmT) LIKE :text OR LOWER(a.nature) LIKE :text OR LOWER(a.bieAdresse) LIKE :text OR LOWER(a.bieCadT) LIKE :text')
+                ->setParameter('text', '%'.strtolower($text).'%');
+        }
+
+        if ($date !== null) {
+            $qb->andWhere('a.dateDepot = :date')
+                ->setParameter('date', new \DateTime($date));
+        }
+        return $qb->getQuery()->getResult();
+    }
+
 }
