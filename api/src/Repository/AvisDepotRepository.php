@@ -32,9 +32,9 @@ class AvisDepotRepository extends ServiceEntityRepository
     }
 
     /**
-     * Retrieve the list of urban planning authorization requests depends based on filters
+     * Retrieve the list of urban planning authorization requests based on filters
      *
-     * @param [type] $filters
+     * @param string $filter
      * @return array
      */
     public function getAuthorizationRequestsFilters($filter): array

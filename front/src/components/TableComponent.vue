@@ -1,14 +1,14 @@
 <template>
     <div id="filters_row" class="mb-3">
         <input type="text" v-model="filters.text" placeholder="Rechercher" class="mb-2 ms-5">
-        <button type=button disabled class="btn btn-outline-secondary mb-2">
+        <input type="date" v-model="filters.date" class="mb-2 ms-5">
+        <button type=button @click="fetchFilteredData" class="btn btn-outline-secondary mb-2 ms-3" title="Rechercher">
             <font-awesome-icon :icon="['fas', 'magnifying-glass']"/>
         </button>
-        <input type="date" v-model="filters.date" class="mb-2 ms-5">
-        <button type=button @click="fetchData" class="btn btn-outline-secondary mb-2 ms-3">
+        <button type=button @click="fetchData" class="btn btn-outline-secondary mb-2 ms-3" title="Réinitialiser les filtres">
             <font-awesome-icon :icon="['fas', 'rotate-right']" />
         </button>
-        <button type=button @click="fetchFilteredData" class="btn btn-outline-secondary mb-2 ms-3">
+        <button type=button disabled class="btn btn-outline-secondary mb-2 ms-3">
             <font-awesome-icon :icon="['fas', 'right-left']" class="me-2"/>Afficher les autorisations d'urbanisme
         </button>
     </div>
@@ -96,10 +96,15 @@ export default {
 </script>
 
 <style scoped>
+body {
+    font-family: Arial, Helvetica, sans-serif
+}
+
 table{
     border : 2px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
+
 thead{
     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
     position: sticky;
